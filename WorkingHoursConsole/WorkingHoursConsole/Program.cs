@@ -13,7 +13,7 @@ void CalculateWorkingHours()
     var answer = string.Empty;
     while (answer != "n" && answer != "y")
     {
-        Console.WriteLine("Wanna use the default path?(y/n)"); 
+        Console.WriteLine("Wanna use the default path?(y/n)");
         answer = Console.ReadLine().ToLower();
     }
     if (answer == "n")
