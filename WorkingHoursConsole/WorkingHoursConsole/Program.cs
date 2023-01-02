@@ -109,18 +109,18 @@ void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorking
     Console.WriteLine($" -------------------- ");
     Console.WriteLine($"The Daily Working Hours (Monthly Working Hours): {monthlyWorkingHours / theEndOfMonth}");
     Console.WriteLine($" -------------------- ");
-    Console.WriteLine($"You Should Work Daily That Much According The Number Of Remaining Days (Monthly Working Hours) : {Math.Round((monthlyWorkingHours - totalTime) / theNumberOfRemainingDays)}");
+    Console.WriteLine($"You Should Work Daily That Much According The Number Of Remaining Days (Monthly Working Hours) : {Math.Round((monthlyWorkingHours - totalTime) / theNumberOfRemainingDays, 1, MidpointRounding.AwayFromZero)}");
     Console.WriteLine($" -------------------- ");
     Console.WriteLine($"The Daily Working Hours (The Goal Working Hours): {theGoal / theEndOfMonth}");
     Console.WriteLine($" -------------------- ");
-    Console.WriteLine($"You Should Work Daily That Much According The Number Of Remaining Days (The Goal Working Hours) : {Math.Round((theGoal - totalTime) / theNumberOfRemainingDays)}");
+    Console.WriteLine($"You Should Work Daily That Much According The Number Of Remaining Days (The Goal Working Hours) : {Math.Round((theGoal - totalTime) / theNumberOfRemainingDays, 1, MidpointRounding.AwayFromZero)}");
     Console.ForegroundColor = ConsoleColor.DarkCyan;
     Console.WriteLine();
     Console.WriteLine($"!-----Information Part Today -----!");
     Console.WriteLine($" ----------The Monthly---------- ");
-    Console.WriteLine($"{theMonthlyWorkingHoursTodayText} : {Math.Round(theMonthlyWorkingHoursTimeToday)}");
+    Console.WriteLine($"{theMonthlyWorkingHoursTodayText} : {Math.Round(theMonthlyWorkingHoursTimeToday, 1, MidpointRounding.AwayFromZero)}");
     Console.WriteLine($" ----------The Goal---------- ");
-    Console.WriteLine($"{theGoalTextToday} : {Math.Round(theGoalTimeToday)}");
+    Console.WriteLine($"{theGoalTextToday} : {Math.Round(theGoalTimeToday, 1, MidpointRounding.AwayFromZero)}");
     Console.WriteLine($"!--------------------!");
 }
 static JsonItem ReadJson(string path, string newPath = "")
