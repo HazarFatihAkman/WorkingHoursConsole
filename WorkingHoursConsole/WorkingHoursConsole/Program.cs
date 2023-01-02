@@ -1,8 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Newtonsoft.Json;
-using System.Linq;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 CalculateWorkingHours();
 
