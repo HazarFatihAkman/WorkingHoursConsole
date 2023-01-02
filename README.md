@@ -1,5 +1,5 @@
 # WorkingHoursConsole
-**It's calculating your total working hours you added it on Bunddee.**
+**It's calculating your total working hours you added it on Buddee.**
 
 # Usage
 **appsettings.json**
