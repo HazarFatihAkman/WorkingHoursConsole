@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "VpEwbNEnKTqWfUhT0JWFg9hNpEFxM6dky9Lo6MF97ekz/iqgvS5Rd5IuiqMjyKTxZZMEFkBPC05hN9YeXtk6Tw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Nn\\Desktop\\workspace\\WorkingHoursConsole\\WorkingHoursConsole\\WorkingHoursConsole\\WorkingHoursConsole.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Nn\\.nuget\\packages\\newtonsoft.json\\13.0.2\\newtonsoft.json.13.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
