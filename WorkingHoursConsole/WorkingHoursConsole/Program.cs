@@ -53,8 +53,10 @@ void CalculateWorkingHours()
     Console.WriteLine($"Total Overtime : {jsonItem.TotalOvertime}");
     var theEndOfMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
     var today = DateTime.Now.ToString("dd-MM-yyyy");
+    var yesterday = DateTime.Now.AddDays(-1).ToString("dd-MM-yyyy");
     var todayWorkingHours = jsonItem.WorkingHours.Where(x => x.Date.Contains(today)).ToList();
-    CalculateTheWorkingHours(theEndOfMonth, appSettings.TheGoal, appSettings.MonthlyWorkingHours, jsonItem.Total, todayWorkingHours.Sum(x => x.TotalTime));
+    var yesterdayWorkingHours = jsonItem.WorkingHours.Where(x => x.Date.Contains(yesterday)).ToList();
+    CalculateTheWorkingHours(theEndOfMonth, appSettings.TheGoal, appSettings.MonthlyWorkingHours, jsonItem.Total, todayWorkingHours.Sum(x => x.TotalTime), yesterdayWorkingHours.Sum(x => x.TotalTime));
     jsonItem.WorkingHours = jsonItem.WorkingHours.Select(x => 
                                                              {
                                                                  if (x.TotalTime > 0) 
@@ -67,15 +69,16 @@ void CalculateWorkingHours()
     Console.WriteLine("Press enter to close...");
     Console.ReadLine();
 }
-void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorkingHours, decimal totalTime, decimal todayWorkingHours)
+void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorkingHours, decimal totalTime, decimal todayWorkingHours, decimal yesterdayWorkingHours)
 {
     var theNumberOfRemainingDays = theEndOfMonth - DateTime.Now.Day;
-
-
+    var theNumberOfOldRemainingDays = theEndOfMonth - DateTime.Now.AddDays(-1).Day;
+    var theMonthlyWorkingHoursTimeYesterday = yesterdayWorkingHours - ((monthlyWorkingHours - (totalTime - todayWorkingHours)) / theNumberOfOldRemainingDays);
     var theMonthlyWorkingHoursTimeToday = todayWorkingHours - ((monthlyWorkingHours - totalTime) / theNumberOfRemainingDays);
-    var theMonthlyWorkingHoursTodayText = string.Empty;
-
     var theGoalTimeToday = todayWorkingHours - ((theGoal - totalTime) / theNumberOfRemainingDays);
+
+    var theMonthlyWorkingHoursTodayText = string.Empty;
+    var theMonthlyWorkingHoursTimeYesterdayText = string.Empty;
     var theGoalTextToday = string.Empty;
     if(Math.Round(theGoalTimeToday) > 0) 
     {
@@ -102,9 +105,22 @@ void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorking
     {
         theMonthlyWorkingHoursTodayText = "The Missing Time To Reach The Monthly Working Hours Today";
     }
+
+    if(Math.Round(theMonthlyWorkingHoursTimeYesterday) > 0) 
+    {
+        theMonthlyWorkingHoursTimeYesterdayText = "You worked too much :>";
+    }
+    else if (Math.Round(theMonthlyWorkingHoursTimeYesterday) == 0)
+    {
+        theMonthlyWorkingHoursTimeYesterdayText = "There's nothing for you ^~^";
+    }
+    else
+    {
+        theMonthlyWorkingHoursTimeYesterdayText = "The Missing Time To Reach The Monthly Working Hours Today";
+    }
     Console.ForegroundColor = ConsoleColor.Cyan;
     Console.WriteLine();
-    Console.WriteLine($"!-----Information Part Total -----!");
+    Console.WriteLine($"!----- Information For Total -----!");
     Console.WriteLine($"The Number Of Remaning Days : {theNumberOfRemainingDays}");
     Console.WriteLine($" -------------------- ");
     Console.WriteLine($"The Daily Working Hours (Monthly Working Hours): {monthlyWorkingHours / theEndOfMonth}");
@@ -116,10 +132,12 @@ void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorking
     Console.WriteLine($"You Should Work Daily That Much According The Number Of Remaining Days (The Goal Working Hours) : {Math.Round((theGoal - totalTime) / theNumberOfRemainingDays, 1, MidpointRounding.AwayFromZero)}");
     Console.ForegroundColor = ConsoleColor.DarkCyan;
     Console.WriteLine();
-    Console.WriteLine($"!-----Information Part Today -----!");
-    Console.WriteLine($" ----------The Monthly---------- ");
+    Console.WriteLine($"!----- Information For Today And Yesterday -----!");
+    Console.WriteLine($" ---------- The Monthly(Today) ---------- ");
     Console.WriteLine($"{theMonthlyWorkingHoursTodayText} : {Math.Round(theMonthlyWorkingHoursTimeToday, 1, MidpointRounding.AwayFromZero)}");
-    Console.WriteLine($" ----------The Goal---------- ");
+    Console.WriteLine($" ---------- The Monthly(Yesterday) ---------- ");
+    Console.WriteLine($"{theMonthlyWorkingHoursTimeYesterdayText} : {Math.Round(theMonthlyWorkingHoursTimeYesterday, 1, MidpointRounding.AwayFromZero)}");
+    Console.WriteLine($" ---------- The Goal ---------- ");
     Console.WriteLine($"{theGoalTextToday} : {Math.Round(theGoalTimeToday, 1, MidpointRounding.AwayFromZero)}");
     Console.WriteLine($"!--------------------!");
 }
