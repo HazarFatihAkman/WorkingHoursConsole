@@ -71,7 +71,7 @@ void CalculateWorkingHours()
 }
 void CalculateTheWorkingHours(int theEndOfMonth, int theGoal, int monthlyWorkingHours, decimal totalTime, decimal todayWorkingHours, decimal yesterdayWorkingHours)
 {
-    var theNumberOfRemainingDays = theEndOfMonth - DateTime.Now.Day;
+    var theNumberOfRemainingDays = theEndOfMonth - DateTime.Now.AddDays(-1).Day;
     var theNumberOfOldRemainingDays = theEndOfMonth - DateTime.Now.AddDays(-1).Day;
     var theMonthlyWorkingHoursTimeYesterday = yesterdayWorkingHours - ((monthlyWorkingHours - (totalTime - todayWorkingHours)) / theNumberOfOldRemainingDays);
     var theMonthlyWorkingHoursTimeToday = todayWorkingHours - ((monthlyWorkingHours - totalTime) / theNumberOfRemainingDays);
